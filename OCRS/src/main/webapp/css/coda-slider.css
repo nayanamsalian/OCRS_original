@@ -1,0 +1,211 @@
+#slider {
+    position: relative;
+	width: 1000px;
+	padding: 8px 10px 0 70px;
+	/* background-color: #d0c749; */
+}
+
+#templatemo_body_wrapper {
+	width: 100%;
+	background: url(../images/background3.jpg) top center no-repeat
+}
+
+#templatemo_sidebar {
+	float: left;
+	width: 243px;
+	height: 675px;
+	/*background-color: #bfbfbf;*/
+	background: url(../images/sidebar5.jpg) top center no-repeat
+}
+
+
+
+
+#templatemo_main {
+	float: right;
+	/* padding-top: 5px; */
+	width: 735px;	
+}
+
+#templatemo_header {
+	margin-left: 10px;
+	width: 230px;
+	height: 114px;
+	text-align: center;
+	padding: 80px 0 0 0;
+	background: url(../images/templatemo_header.jpg) no-repeat top left;
+}
+
+#social_box {
+	display: block;
+	width: 449;
+	height: 48px;
+	padding: 20px 0px 25px 527px;
+	margin-bottom: 20px;
+	background-color: #D3D3D3;
+	opacity: 0.7;
+	/* background: url(../images/templatemo_social_box.jpg) no-repeat; */
+	/* background-color: #65601a; */
+}
+
+#social_box li {
+	display: block;
+	float: right;
+	padding: 0;
+	margin: 0;
+}
+
+#social_box li a {
+	width: 48px;
+	height: 48px;
+	margin-right: 20px;
+}
+
+
+#content {  
+	border-radius:20px;
+	height: 550px;
+	width: 976px;
+	
+    background-color:#faf9eb; 
+    opacity: 0.8;
+    
+}
+
+.scroll {
+    height: 455px;
+    width: 976px;
+    overflow: auto;
+/*  overflow-x: hidden; */
+    position: relative;
+    clear: left;
+}
+
+.scrollContainer div.panel {
+    padding: 28px;
+    height: 500px;
+    width: 938px;
+    color: balck;
+}
+
+ul.navigation {
+	width: 270px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+	text-align: left;
+}
+
+ul.navigation li {
+    display: inline-block;
+    margin: 0px;
+	padding: 0;
+}
+
+ul.navigation a{
+	display: block;
+	width: 190px;
+	height: 33px;
+	padding: 12px 0 0 18px;
+	margin-bottom: 5px;
+	color: #8a8980;
+	font-size: 16px;
+	font-weight: normal;
+    text-decoration: none;
+	position: relative;
+}
+
+
+table.table_div td{
+	display: block;
+	width: 190px;
+	height: 33px;
+	padding: 12px 0 0 18px;
+	margin-bottom: 5px;
+	color: black;
+	font-size: 16px;
+	font-weight: normal;
+    text-decoration: none;
+	position: relative;
+}
+
+#aId { 
+	color: #000000; 
+	font-size: 21px;
+	text-decoration: none;
+}
+
+ul.navigation a .ui_icon { position: absolute; top: 0; left: 15px; width: 40px; height: 40px; }
+
+/* ul.navigation a .home { background: url(../images/templatemo_menu_hover.png) no-repeat; }
+ul.navigation a .aboutus { background: url(../images/templatemo_aboutus.png) no-repeat; }
+ul.navigation a .services { background: url(../images/templatemo_services.png)  no-repeat; }
+ul.navigation a .gallery { background:  url(../images/templatemo_portfolio.png) no-repeat; }
+ul.navigation a .contactus { background:  url(../images/templatemo_contact.png) no-repeat; } */
+
+div.table_div td:hover, div.table_div td.selected{
+	color: #201f1b;
+	background: url(../images/templatemo_menu_hover.png) no-repeat left;
+}
+
+ul.navigation a:hover .home, ul.navigation a.selected .home {
+	background: url(../images/templatemo_home_hover.png) no-repeat;
+}
+ul.navigation a:hover .aboutus, ul.navigation a.selected .aboutus {
+	background: url(../images/templatemo_aboutus_hover.png) no-repeat;
+}
+ul.navigation a:hover .services, ul.navigation a.selected .services {
+	background: url(../images/templatemo_services_hover.png) no-repeat;
+}
+ul.navigation a:hover .gallery, ul.navigation a.selected .gallery {
+	background: url(../images/templatemo_portfolio_hover.png) no-repeat;
+}
+ul.navigation a:hover .contactus, ul.navigation a.selected .contactus {
+	background: url(../images/templatemo_contact_hover.png) no-repeat;
+}
+
+div.table_div a:focus{
+	outline: none;
+}
+ul.navigation a:focus {
+    outline: none;
+}
+
+.scrollButtons {
+    position: absolute;
+    top: 300px;
+    cursor: pointer;
+	width: 0;
+	height: 0;
+}
+
+.scrollButtons.left {
+    left: -50px;
+}
+
+.scrollButtons.right {
+    right: -50px;
+}
+
+.hide {
+    display: none;
+}
+
+#register{
+	margin-top: 10px;
+	padding: 20px;
+}
+
+.compaliant_table{
+width:896px;	
+}
+
+.regis_main{
+	padding: 36px 10px 0px 10px;
+}
+.heading{
+	padding: 58px 10px 0px 10px;
+}
+.already_reg{
+	padding: 20px;
+}
