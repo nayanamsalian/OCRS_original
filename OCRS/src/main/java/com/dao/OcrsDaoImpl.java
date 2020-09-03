@@ -350,8 +350,8 @@ public class OcrsDaoImpl implements OcrsDoa {
 			pstmt = con.prepareStatement("delete from police_station_table where user_name=?");
 			pstmt.setString(1, username);
 			pstmt.executeUpdate();
-
-			pstmt = con.prepareStatement("delete from authorities where username=? and authoruty=?" );
+			pstmt=null;
+			pstmt = con.prepareStatement("delete from authorities where username=? and authority=?" );
 			pstmt.setString(1, username);
 			pstmt.setString(2, "ROLE_POLICE");
 			pstmt.executeUpdate();
