@@ -210,7 +210,7 @@ public class ControllerTwo {
 	public String deletePolice(HttpServletRequest rq, HttpServletResponse rs) {
 		String username=rq.getParameter("user_name");
 		ocrsService.deletePolice(username);
-		return "manage_user";
+		return "manage_police";
 
 	}
 
@@ -249,6 +249,8 @@ public class ControllerTwo {
 	public ModelAndView getComplaintByStationID(HttpServletRequest rq, HttpServletResponse rs) {
 		String p_id=rq.getParameter("p_id");
 		List<ComplaintPojo> complaints=ocrsService.getComplaintsByStationId(p_id);
+		if(complaints.size()==0)
+			complaints=null;
 		ModelAndView mv=new ModelAndView();
 		mv.addObject("complaints",complaints);
 		mv.setViewName("view_all_complaint");
@@ -269,7 +271,7 @@ public class ControllerTwo {
 	public String deactivateUser(HttpServletRequest rq, HttpServletResponse rs) {
 		String username=rq.getParameter("userName");
 		ocrsService.deleteUser(username);
-		return "fancy-login";
+		return "login";
 	}
 
 	@RequestMapping("printUser")

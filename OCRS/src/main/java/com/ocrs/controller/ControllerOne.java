@@ -54,7 +54,6 @@ public class ControllerOne {
 		mv.setViewName("registration-form");
 		return mv;
 		
-		//return "registration-form";
 	}
 	
 	@GetMapping("/complaintDetails")
