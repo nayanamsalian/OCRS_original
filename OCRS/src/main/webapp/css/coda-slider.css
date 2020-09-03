@@ -5,9 +5,37 @@
 	/* background-color: #d0c749; */
 }
 
+
+
 #templatemo_body_wrapper {
 	width: 100%;
-	background: url(../images/background3.jpg) top center no-repeat
+	background: url(../images/hiclipart.png) left center repeat
+}
+
+#login-background{
+	background: url(../images/login-back2.png) left center repeat
+}
+
+#imge{
+	/*background-color:white;
+	background: url(../images/iii.png)
+	opacity: 0.7;*/
+	position:relative;
+	margin-top:30px;
+	margin-left:150px
+}
+#loginbox{
+	margin-top:0px;
+}
+
+#top_box{
+	padding-left: 118px;
+	font-size: 46px;
+	font-weight:900;
+	color:black;
+	height: 80px;
+	background-color: #8b4513;
+	opacity:0.5;
 }
 
 #templatemo_sidebar {
@@ -27,25 +55,33 @@
 	width: 735px;	
 }
 
+hr.color{
+	border: 1px dashed black;
+}
+
 #templatemo_header {
 	margin-left: 10px;
 	width: 230px;
 	height: 114px;
 	text-align: center;
 	padding: 80px 0 0 0;
-	background: url(../images/templatemo_header.jpg) no-repeat top left;
+	background: url(../images/header.png) no-repeat top left;
 }
 
 #social_box {
 	display: block;
-	width: 449;
-	height: 48px;
-	padding: 20px 0px 25px 527px;
+	width: 911px;
+	height: 80px;
+	color: black;
+	
 	margin-bottom: 20px;
 	background-color: #D3D3D3;
 	opacity: 0.7;
 	/* background: url(../images/templatemo_social_box.jpg) no-repeat; */
 	/* background-color: #65601a; */
+}
+#social_box2{
+	
 }
 
 #social_box li {
@@ -135,6 +171,12 @@ table.table_div td{
 	text-decoration: none;
 }
 
+#home{
+	color:black;
+	font-size: 16px;
+}
+
+
 ul.navigation a .ui_icon { position: absolute; top: 0; left: 15px; width: 40px; height: 40px; }
 
 /* ul.navigation a .home { background: url(../images/templatemo_menu_hover.png) no-repeat; }
@@ -197,7 +239,8 @@ ul.navigation a:focus {
 }
 
 .compaliant_table{
-width:896px;	
+width:896px;
+color:black;	
 }
 
 .regis_main{
