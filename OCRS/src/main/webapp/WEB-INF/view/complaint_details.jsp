@@ -44,16 +44,15 @@
 		<div id="slider">
 
 			<div id="templatemo_sidebar">
-				<div id="templatemo_header">
-					<a href="#"><img src="images/templatemo_logo.png"
-						alt="Mini Social" /></a>
-				</div>
+				<div id="templatemo_header"></div>
+				<hr class="color">
 				<!-- end of header -->
 				<div class="table_div" class="home">
 					<table class="table_div">
 						<tr>
 							<td><p>
-									<a id="aId" href="${pageContext.request.contextPath}/addComplaint">Add
+									<a id="aId"
+										href="${pageContext.request.contextPath}/addComplaint">Add
 										complaint</a>
 								</p></td>
 							<td>
@@ -74,12 +73,15 @@
 			<div id="templatemo_main">
 
 				<ul id="social_box">
-				
-					<li><a href="logout"><img
-							src="images/logout.png" alt="myspace" /></a></li>
-					<li><a href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property="principal.username" />"><img
+					<h4 style="color: black; padding: 20px 0px 25px 24px;">
+						Online Crime<br>Reporting System
+					</h4>
+					<li><a href="logout"><img src="images/logout.png"
+							alt="myspace" /></a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property="principal.username" />"><img
 							src="images/templatemo_aboutus.png" alt="twitter" /></a></li>
-							
+
 					<li><a href="${pageContext.request.contextPath}/"><img
 							src="images/templatemo_home_hover.png" /></a></li>
 				</ul>

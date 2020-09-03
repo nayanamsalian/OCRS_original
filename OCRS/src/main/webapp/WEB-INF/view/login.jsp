@@ -24,11 +24,12 @@
 
 </head>
 
-<body id="templatemo_body_wrapper">
+<body id="login-background">
 
 	<div>
+	<div id="top_box">Online Crime Reporting System</div>
 
-		<div id="loginbox" style="margin-top: 110px; margin-left: 100px"
+		<div id="loginbox" style="margin-top: 40px; margin-left: 100px"
 			class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
 
 			<div class="register">
@@ -118,12 +119,13 @@
 			</div>
 
 		</div>
+		
+		<div id="imge">
+		<img  alt="alt" src="images/iii.png">
+		</div>
 
 	</div>
 
-
-
-	<div></div>
 
 </body>
 </html>

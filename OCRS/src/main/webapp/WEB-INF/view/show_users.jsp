@@ -47,9 +47,8 @@
 
 			<div id="templatemo_sidebar">
 				<div id="templatemo_header">
-					<a href="#"><img src="images/templatemo_logo.png"
-						alt="Mini Social" /></a>
 				</div>
+				<hr class="color">
 				<!-- end of header -->
 				<div class="table_div" class="home">
 					<table class="table_div">
@@ -89,6 +88,9 @@
 			<div id="templatemo_main">
 
 				<ul id="social_box">
+					<h4 style="color: black; padding: 20px 0px 25px 24px;">
+						Online Crime<br>Reporting System
+					</h4>
 				
 					<li><a href="logout"><img
 							src="images/logout.png" alt="myspace" /></a></li>
@@ -119,8 +121,8 @@
 		</div>
 
 		<c:if test="${users !=null}">
-			<div align="center">
-				<table border="1" cellpadding="5">
+			<div>
+				<table border="0" cellpadding="5" style="color:black;">
 					<caption>
 						<h2>List of users</h2>
 					</caption>

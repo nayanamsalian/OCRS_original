@@ -47,39 +47,45 @@
 		<div id="slider">
 
 			<div id="templatemo_sidebar">
-				<div id="templatemo_header">
-					<a href="#"><img src="images/templatemo_logo.png"
-						alt="Mini Social" /></a>
-				</div>
+				<div id="templatemo_header"></div>
+				<hr class="color">
 				<!-- end of header -->
 				<div class="table_div" class="home">
 					<table class="table_div">
 						<tr>
 							<td><security:authorize access="hasRole('POLICE')">
 									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/publicComplaints">public
+										<a id="aId"
+											href="${pageContext.request.contextPath}/publicComplaints">public
 											complaints</a>
 									</p>
 								</security:authorize></td>
 							<td>
 								<p>
-									<a id="aId" href="${pageContext.request.contextPath}/complaintDetails">Complaint
+									<a id="aId"
+										href="${pageContext.request.contextPath}/complaintDetails">Complaint
 										Details</a>
 								</p>
 
 							</td>
-							<security:authorize access="hasRole('ADMIN')"><td>
+							<security:authorize access="hasRole('ADMIN')">
+								<td>
 									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/manageUser">Manage
+										<a id="aId"
+											href="${pageContext.request.contextPath}/manageUser">Manage
 											User</a>
 									</p>
-								</td></security:authorize>
-							<security:authorize access="hasRole('ADMIN')"><td>
+								</td>
+							</security:authorize>
+							<security:authorize access="hasRole('ADMIN')">
+								<td>
 									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/managePolice">Manage
+										<a id="aId"
+											href="${pageContext.request.contextPath}/managePolice">Manage
 											Police</a>
 									</p>
-								</td></security:authorize>
+								</td>
+							</security:authorize>
 						</tr>
 					</table>
 				</div>
@@ -91,12 +97,16 @@
 			<div id="templatemo_main">
 
 				<ul id="social_box">
-				
-					<li><a href="logout"><img
-							src="images/logout.png" alt="myspace" /></a></li>
-					<li><a href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property="principal.username" />"><img
+					<h4 style="color: black; padding: 20px 0px 25px 24px;">
+						Online Crime<br>Reporting System
+					</h4>
+
+					<li><a href="logout"><img src="images/logout.png"
+							alt="myspace" /></a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property="principal.username" />"><img
 							src="images/templatemo_aboutus.png" alt="twitter" /></a></li>
-							
+
 					<li><a href="${pageContext.request.contextPath}/"><img
 							src="images/templatemo_home_hover.png" /></a></li>
 				</ul>
@@ -134,34 +144,41 @@
 									<input type="submit" value="search complaint by station ID">
 								</form:form>
 								<div>
-									<table border="1" cellpadding="5" class="compaliant_table">
-										<caption>
-											<h2>List of Complaints</h2>
-										</caption>
-										<tr>
-											<th>-----</th>
-											<th>P_id</th>
-											<th>Complaints</th>
-											<th>status</th>
-											<th>-----</th>
-										</tr>
-										<c:forEach var="complaint" items="${complaints}">
-											<tr>
-												<td>
-												<security:authorize access="hasRole('ADMIN')">
-												<a href="${pageContext.request.contextPath}/deleteComplaint?complaint_id=${complaint.getComplaint_id()}&user_name=<security:authentication property="principal.username" />&id=1">
-												<img src="images/delete_3.png" /></a>  
-												</security:authorize>
-												</td>
-												<td><c:out value="${complaint.getP_code()}" /></td>
-												<td><c:out value="${complaint.getComplaint()}" /></td>
-												<td><c:out value="${complaint.getStatus()}" /></td>
-												<td><a
-													href="${pageContext.request.contextPath}/expandComplaint?c_id=${complaint.getComplaint_id()}">view
-														complaint</a></td>
+									
+									<c:if test="${complaints != null }">
+
+										<table border="0" cellpadding="5" class="compaliant_table">
+											<caption>
+												<h2>List of Complaints</h2>
+											</caption>
+											<tr style="text-align: left">
+												<th>-----</th>
+												<th>P_id</th>
+												<th>Complaints</th>
+												<th>status</th>
+												<th>-----</th>
 											</tr>
-										</c:forEach>
-									</table>
+											<c:forEach var="complaint" items="${complaints}">
+												<tr>
+													<td><security:authorize access="hasRole('ADMIN')">
+															<a
+																href="${pageContext.request.contextPath}/deleteComplaint?complaint_id=${complaint.getComplaint_id()}&user_name=<security:authentication property="principal.username" />&id=1">
+																<img src="images/delete_3.png" />
+															</a>
+														</security:authorize></td>
+													<td><c:out value="${complaint.getP_code()}" /></td>
+													<td><c:out value="${complaint.getComplaint()}" /></td>
+													<td><c:out value="${complaint.getStatus()}" /></td>
+													<td><a
+														href="${pageContext.request.contextPath}/expandComplaint?c_id=${complaint.getComplaint_id()}">view
+															complaint</a></td>
+												</tr>
+											</c:forEach>
+										</table>
+									</c:if>
+									<c:if test="${complaints == null }">
+										No reords found
+									</c:if>
 								</div>
 							</div>
 						</div>

@@ -48,38 +48,22 @@
 
 			<div id="templatemo_sidebar">
 				<div id="templatemo_header">
-					<a href="#"><img src="images/templatemo_logo.png"
-						alt="Mini Social" /></a>
 				</div>
+				<hr class="color">
 				<!-- end of header -->
 				<div class="table_div" class="home">
 					<table class="table_div">
 						<tr>
-							<td><security:authorize access="hasRole('POLICE')">
-									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/publicComplaints">public
-											complaints</a>
-									</p>
-								</security:authorize></td>
+							<td><p>
+									<a id="aId" href="${pageContext.request.contextPath}/makeAsPolice">Add
+										Police</a>
+								</p></td>
 							<td>
 								<p>
-									<a id="aId" href="${pageContext.request.contextPath}/complaintDetails">Complaint
-										Details</a>
+									<a id="aId" href="${pageContext.request.contextPath}/viewAllPolice">View
+										All Police</a>
 								</p>
-
 							</td>
-							<security:authorize access="hasRole('ADMIN')"><td>
-									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/manageUser">Manage
-											User</a>
-									</p>
-								</td></security:authorize>
-							<security:authorize access="hasRole('ADMIN')"><td>
-									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/managePolice">Manage
-											Police</a>
-									</p>
-								</td></security:authorize>
 						</tr>
 					</table>
 				</div>
@@ -90,6 +74,9 @@
 			<div id="templatemo_main">
 
 				<ul id="social_box">
+					<h4 style="color: black; padding: 20px 0px 25px 24px;">
+						Online Crime<br>Reporting System
+					</h4>
 				
 					<li><a href="logout"><img
 							src="images/logout.png" alt="myspace" /></a></li>
@@ -123,7 +110,7 @@
 
 									<c:if test="${users !=null}">
 										<div align="center">
-											<table border="1" cellpadding="5">
+											<table style="color:black;" cellpadding="5">
 												<caption>
 													<h2>List of users</h2>
 												</caption>
