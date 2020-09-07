@@ -121,7 +121,7 @@
 								<div align="center">
 									<table border="1" cellpadding="5">
 										<caption>
-											<h2>List of users</h2>
+											<h2>My Complaints</h2>
 										</caption>
 										<tr>
 											<th>-----</th>
@@ -134,7 +134,7 @@
 											<tr>
 												<td><security:authorize access="hasRole('ADMIN')">
 														<a
-															href="${pageContext.request.contextPath}/deleteComplaint?complaint_id=${complaint.getComplaint_id()}&user_name=<security:authentication property="principal.username" />">
+															href="${pageContext.request.contextPath}/deleteComplaint?complaint_id=${complaint.getComplaint_id()}&user_name=<security:authentication property="principal.username" />&id=0">
 															<img src="images/delete_3.png" />
 														</a>
 													</security:authorize></td>

@@ -149,7 +149,7 @@
 
 										<table border="0" cellpadding="5" class="compaliant_table">
 											<caption>
-												<h2>List of Complaints</h2>
+												<h2>Complaints</h2>
 											</caption>
 											<tr style="text-align: left">
 												<th>-----</th>
