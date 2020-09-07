@@ -1,5 +1,6 @@
 package com.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,27 @@ public class OcrsService {
 		
 		return ocrsDoa.getAllUsers();
 	}
-
+	
+	public List<UserPojo> getAllUserWhoAreNotPolice() {
+		
+		List<UserPojo> users=ocrsDoa.getAllUsers();
+		List<UserPojo> user_not_police=new ArrayList<UserPojo>();
+		List<PolicePojo> polices=ocrsDoa.getAllPolice();
+		for(UserPojo pojo: users) {
+			int flag=0;
+			for (PolicePojo policePojo : polices) {
+				if(policePojo.getUserName().equals(pojo.getUserName()))
+				{
+					++flag;
+				}
+			}
+			if(flag==0) {
+			user_not_police.add(pojo);
+			}
+		}
+		return user_not_police;
+	}
+	
 	public void addPolice(String username,String p_id) {
 		ocrsDoa.addPolice(username,p_id);
 		

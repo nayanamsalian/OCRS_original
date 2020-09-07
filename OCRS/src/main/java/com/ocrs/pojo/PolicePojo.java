@@ -12,6 +12,10 @@ public class PolicePojo {
 		this.p_id = p_id;
 	}
 	
+	public PolicePojo() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getUserName() {
 		return userName;
 	}

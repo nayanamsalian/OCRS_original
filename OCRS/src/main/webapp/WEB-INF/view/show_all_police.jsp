@@ -112,8 +112,7 @@
 														<td><c:out value="${police.getUserName()}" /></td>
 														<td><c:out value="${police.getP_id()}" /></td>
 														<td><a
-															href="${pageContext.request.contextPath}/deletePolice?user_name=${police.getUserName()}">Delete
-																police</a></td>
+															href="${pageContext.request.contextPath}/deletePolice?user_name=${police.getUserName()}">Delete</a></td>
 													</tr>
 												</c:forEach>
 											</table>

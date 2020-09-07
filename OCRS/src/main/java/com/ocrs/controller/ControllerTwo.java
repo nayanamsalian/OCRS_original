@@ -194,7 +194,7 @@ public class ControllerTwo {
 
 	@GetMapping("makeAsPolice")
 	public ModelAndView makeAsPolice(HttpServletRequest rq, HttpServletResponse rs) {
-		List<UserPojo> users=ocrsService.getAllUsers();
+		List<UserPojo> users=ocrsService.getAllUserWhoAreNotPolice();
 		if(users.size()==0)
 			users=null;
 		ModelAndView mv=new ModelAndView();
@@ -205,13 +205,19 @@ public class ControllerTwo {
 	}
 
 	@RequestMapping("updateUserToPolice")
-	public String updateUserToPolice(HttpServletRequest rq, HttpServletResponse rs) {
+	public ModelAndView updateUserToPolice(HttpServletRequest rq, HttpServletResponse rs) {
 		String username=rq.getParameter("user_name");
 		String p_id=rq.getParameter("p_id");
 		System.out.println("p_id:"+p_id);
 		ocrsService.addPolice(username,p_id);
+
+		List<PolicePojo> polices=ocrsService.getAllPolice();
+		if(polices.size()==0)
+			polices=null;
 		ModelAndView mv=new ModelAndView();
-		return "manage_police";	
+		mv.addObject("polices",polices);
+		mv.setViewName("show_all_police");
+		return mv;
 	}
 
 	@GetMapping("viewAllPolice")
@@ -227,10 +233,16 @@ public class ControllerTwo {
 	}
 
 	@RequestMapping("deletePolice")
-	public String deletePolice(HttpServletRequest rq, HttpServletResponse rs) {
+	public ModelAndView deletePolice(HttpServletRequest rq, HttpServletResponse rs) {
 		String username=rq.getParameter("user_name");
 		ocrsService.deletePolice(username);
-		return "manage_police";
+		List<PolicePojo> polices=ocrsService.getAllPolice();
+		if(polices.size()==0)
+			polices=null;
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("polices",polices);
+		mv.setViewName("show_all_police");
+		return mv;
 
 	}
 
