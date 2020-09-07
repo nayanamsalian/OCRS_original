@@ -79,7 +79,7 @@ public class ControllerTwo {
 	}
 
 	@PostMapping("/postComplaint")
-	public String postCompaint(@Validated FileModel file, BindingResult result,HttpServletRequest rq, HttpServletResponse rs) {
+	public String postCompaint(HttpServletRequest rq, HttpServletResponse rs) {
 		System.out.println("Post_complaint");
 		String p_id=rq.getParameter("p_id");
 		String user_name=rq.getParameter("user_name");
@@ -89,8 +89,36 @@ public class ControllerTwo {
 		int complaint_id=0;
 		String uploaded_file_full_path="";
 
+		
+		ComplaintPojo complaintPojo=new ComplaintPojo(user_name, p_id, complaint, uploaded_file_full_path,priority,"In Progress");
+
+		if(rq.getParameter("c_id")!=null)
+			complaint_id=Integer.parseInt(rq.getParameter("c_id"));
+		if(complaint_id!=0) {
+			complaintPojo.setComplaint_id(complaint_id);
+			System.out.println(complaintPojo);
+			ocrsService.updateComplaint(complaintPojo);
+		}
+		else
+			ocrsService.postComplaint(complaintPojo);
+		return "complaint_details";
+
+	}
+	
+	@RequestMapping("/gotoUploadPage")
+	public String gotoUploadPage() {
+		return "uploadFile";
+	}
+
+	@PostMapping("/uploadFile")
+	public String uploadFile(@Validated FileModel file, BindingResult result,HttpServletRequest rq, HttpServletResponse rs) {
+		System.out.println("inside uploadFile:");
+		int complaint_id=0;
+		String uploaded_file_full_path="";
+
 		if (result.hasErrors()) {
 			uploaded_file_full_path="File Not Found";
+			
 		} else {            
 			System.out.println("inside else:"+file.getFile());
 			MultipartFile multipartFile = file.getFile();
@@ -107,23 +135,15 @@ public class ControllerTwo {
 				e.printStackTrace();
 			}
 			String fileName = multipartFile.getOriginalFilename();
-
+			System.out.println("Filename");
 			//return "success";
 		}
-		ComplaintPojo complaintPojo=new ComplaintPojo(user_name, p_id, complaint, uploaded_file_full_path,priority,"In Progress");
-
-		if(rq.getParameter("c_id")!=null)
-			complaint_id=Integer.parseInt(rq.getParameter("c_id"));
-		if(complaint_id!=0) {
-			complaintPojo.setComplaint_id(complaint_id);
-			System.out.println(complaintPojo);
-			ocrsService.updateComplaint(complaintPojo);
-		}
-		else
-			ocrsService.postComplaint(complaintPojo);
-		return "complaint_details";
+		System.out.println(uploaded_file_full_path);
+		return "add-complaint";
 
 	}
+
+	
 	//@Autowired
 	//MailSender mail;
 
