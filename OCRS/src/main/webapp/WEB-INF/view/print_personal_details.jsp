@@ -44,8 +44,7 @@
 		<div id="slider">
 
 			<div id="templatemo_sidebar">
-				<div id="templatemo_header">
-				</div>
+				<div id="templatemo_header"></div>
 				<hr class="color">
 				<!-- end of header -->
 				<div class="table_div" class="home">
@@ -53,49 +52,63 @@
 						<tr>
 							<td><security:authorize access="hasRole('POLICE')">
 									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/publicComplaints">public
+										<a id="aId"
+											href="${pageContext.request.contextPath}/publicComplaints">public
 											complaints</a>
 									</p>
 								</security:authorize></td>
 							<td>
 								<p>
-									<a id="aId" href="${pageContext.request.contextPath}/complaintDetails">Complaint
+									<a id="aId"
+										href="${pageContext.request.contextPath}/complaintDetails">Complaint
 										Details</a>
 								</p>
 
 							</td>
-							<security:authorize access="hasRole('ADMIN')"><td>
+							<security:authorize access="hasRole('ADMIN')">
+								<td>
 									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/manageUser">Manage
+										<a id="aId"
+											href="${pageContext.request.contextPath}/manageUser">Manage
 											User</a>
 									</p>
-								</td></security:authorize>
-							<security:authorize access="hasRole('ADMIN')"><td>
+								</td>
+							</security:authorize>
+							<security:authorize access="hasRole('ADMIN')">
+								<td>
 									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/managePolice">Manage
+										<a id="aId"
+											href="${pageContext.request.contextPath}/managePolice">Manage
 											Police</a>
 									</p>
-								</td></security:authorize>
+								</td>
+							</security:authorize>
 						</tr>
 					</table>
 				</div>
 
-				
+
 			</div>
 			<!-- end of sidebar -->
 
 			<div id="templatemo_main">
 
 				<ul id="social_box">
-					<h4 style="color: black; padding: 20px 0px 25px 24px;">
+					<h4 style="color: black; padding: 9px 0px 25px 24px;">
 						Online Crime<br>Reporting System
 					</h4>
-					<li><a href="logout"><img
-							src="images/logout.png" alt="myspace" /></a></li>
-					<li><a href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property="principal.username" />"><img
-							src="images/templatemo_aboutus.png" alt="twitter" /></a></li>
+					<li><a href="logout"><img src="images/logout.png"
+							alt="myspace" /></a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property='principal.username'/>">
+							<img src="images/templatemo_aboutus.png" alt="about me" />
+					</a> <br>Hi <security:authentication property='principal.username'/>!</li>
+
 					<li><a href="${pageContext.request.contextPath}/"><img
 							src="images/templatemo_home_hover.png" /></a></li>
+					<li><br>
+					<a style="color: green; font-size: 15;"
+						href="${pageContext.request.contextPath}/myNotifications?userName=<security:authentication property='principal.username'/>">Notifications</a></li>
 				</ul>
 
 				<div id="content">
@@ -109,44 +122,93 @@
 							<div class="panel" id="home">
 
 								<hr>
-								<h2 style="color:black">
+								<h2 style="color: black">
 									Welcome
-									<security:authentication property="principal.username" />!!
-									<br> <br> 
-									
-									</h2>
+									<security:authentication property="principal.username" />
+									!! <br> <br>
+
+								</h2>
 								<hr>
-								<form:form action="${pageContext.request.contextPath}/updateUser" method="POST">
-								First Name:<c:if test="${id!=1}"> ${userPojo.getFirstName()}   <a href="${pageContext.request.contextPath}/printUser?userName=<security:authentication property="principal.username" />&id=1">Edit</a><br><br></c:if>
-								<c:if test="${id==1}"><input type="text" name="element" value="${userPojo.getFirstName()}"/>
-								<input type="hidden" name="id" value="${id}">
-								<input type="hidden" name="userName" value="<security:authentication property="principal.username" />">
-								<input type="submit" value="update">	<br><br></c:if>
+								<form:form
+									action="${pageContext.request.contextPath}/updateUser"
+									method="POST">
+								First Name:<c:if test="${id!=1}"> ${userPojo.getFirstName()}   <a
+											href="${pageContext.request.contextPath}/printUser?userName=<security:authentication property="principal.username" />&id=1">Edit</a>
+										<br>
+										<br>
+									</c:if>
+									<c:if test="${id==1}">
+										<input type="text" name="element"
+											value="${userPojo.getFirstName()}" />
+										<input type="hidden" name="id" value="${id}">
+										<input type="hidden" name="userName"
+											value="<security:authentication property="principal.username" />">
+										<input type="submit" value="update">
+										<br>
+										<br>
+									</c:if>
 								
 								
-								Last Name: <c:if test="${id!=2}">${userPojo.getLastName()}  <a href="${pageContext.request.contextPath}/printUser?userName=<security:authentication property="principal.username" />&id=2">Edit</a><br><br></c:if>
-								<c:if test="${id==2}"><input type="text" name="element" value="${userPojo.getLastName()}"/>
-								<input type="hidden" name="id" value="${id}">
-								<input type="hidden" name="userName" value="<security:authentication property="principal.username" />">
-								<input type="submit" value="update">	<br><br></c:if>
+								Last Name: <c:if test="${id!=2}">${userPojo.getLastName()}  <a
+											href="${pageContext.request.contextPath}/printUser?userName=<security:authentication property="principal.username" />&id=2">Edit</a>
+										<br>
+										<br>
+									</c:if>
+									<c:if test="${id==2}">
+										<input type="text" name="element"
+											value="${userPojo.getLastName()}" />
+										<input type="hidden" name="id" value="${id}">
+										<input type="hidden" name="userName"
+											value="<security:authentication property="principal.username" />">
+										<input type="submit" value="update">
+										<br>
+										<br>
+									</c:if>
 								
 								
-								Email: <c:if test="${id!=3}">${userPojo.getEmail()}    <a href="${pageContext.request.contextPath}/printUser?userName=<security:authentication property="principal.username" />&id=3">Edit</a><br><br></c:if>
-								<c:if test="${id==3}"><input type="text" name="element" value="${userPojo.getEmail()}"/>
-								<input type="hidden" name="id" value="${id}">
-								<input type="hidden" name="userName" value="<security:authentication property="principal.username" />">
-								<input type="submit" value="update">	<br><br></c:if>
+								Email: <c:if test="${id!=3}">${userPojo.getEmail()}    <a
+											href="${pageContext.request.contextPath}/printUser?userName=<security:authentication property="principal.username" />&id=3">Edit</a>
+										<br>
+										<br>
+									</c:if>
+									<c:if test="${id==3}">
+										<input type="text" name="element"
+											value="${userPojo.getEmail()}" />
+										<input type="hidden" name="id" value="${id}">
+										<input type="hidden" name="userName"
+											value="<security:authentication property="principal.username" />">
+										<input type="submit" value="update">
+										<br>
+										<br>
+									</c:if>
 								
 								
-								Gender: <c:if test="${id!=4}">${userPojo.getGender()} <a href="${pageContext.request.contextPath}/printUser?userName=<security:authentication property="principal.username" />&id=4">Edit</a><br><br></c:if>
-								<c:if test="${id==4}"><input type="text" name="element" value="${userPojo.getGender()}"/>
-								<input type="hidden" name="id" value="${id}">
-								<input type="hidden" name="userName" value="<security:authentication property="principal.username" />">
-								<input type="submit" value="update">	<br><br></c:if>
-								
+								Gender: <c:if test="${id!=4}">${userPojo.getGender()} <a
+											href="${pageContext.request.contextPath}/printUser?userName=<security:authentication property="principal.username" />&id=4">Edit</a>
+										<br>
+										<br>
+									</c:if>
+									<c:if test="${id==4}">
+										<input type="text" name="element"
+											value="${userPojo.getGender()}" />
+										<input type="hidden" name="id" value="${id}">
+										<input type="hidden" name="userName"
+											value="<security:authentication property="principal.username" />">
+										<input type="submit" value="update">
+										<br>
+										<br>
+									</c:if>
+
+
+
 								</form:form>
-								<a href="${pageContext.request.contextPath}/deactivateUser?userName=<security:authentication property="principal.username" />">Deactivate Account</a>
-								
+								<%
+									String url = request.getRequestURL() + "?" + request.getQueryString();
+								%>
+								<a
+									href="${pageContext.request.contextPath}/deactivateUser?userName=<security:authentication property="principal.username" />&noti_location=<%=url%>">Deactivate
+									Account</a>
+
 								<hr>
 
 								<input type="hidden" name="${_csrf.parameterName}"

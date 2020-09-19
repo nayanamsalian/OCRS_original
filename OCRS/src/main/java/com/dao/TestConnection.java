@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ocrs.pojo.Notifications;
 import com.ocrs.pojo.PolicePojo;
 import com.ocrs.pojo.UserPojo;
 
@@ -21,9 +22,9 @@ public static void main(String[] args) {
 		 * "female", "ss@gmail.com"); daoImpl.addUser(userPojo);
 		 */
 	
-	List<PolicePojo> users=daoImpl.getAllPolice();
-	for (PolicePojo userPojo : users) {
-		System.out.println(userPojo.getUserName()+" -"+userPojo.getP_id());
+	List<Notifications> noti=daoImpl.getAllNotifications("kk", "admin", "");
+	for (Notifications nits : noti) {
+		System.out.println(nits.getNotification());
 	}
 }
 

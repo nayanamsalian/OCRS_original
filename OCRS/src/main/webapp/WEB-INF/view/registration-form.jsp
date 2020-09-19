@@ -48,6 +48,9 @@
 				<div style="padding-top: 0px">
 					<h3>Register New User</h3>
 				</div>
+				<c:if test="${adminName !=null}">
+				<a href="${pageContext.request.contextPath}/back?adminName=${adminName}">back</a>
+				</c:if>
 
 				<div style="padding-top: 30px" class="panel-body" class="">
 
@@ -66,6 +69,18 @@
 
 										<div class="alert alert-danger col-xs-offset-1 col-xs-10">
 											${registrationError}</div>
+
+									</c:if>
+									<div style="color: red;">
+									<c:if test="${message !=null }">
+									${message}
+									</c:if>
+									</div>
+									
+									<c:if test="${param.error != null}">
+
+										<div class="alert alert-danger col-xs-offset-1 col-xs-10">
+											One or more fields missing</div>
 
 									</c:if>
 
@@ -164,7 +179,7 @@
 	
 	<br>
 	<div class="already_reg">
-	Already registered? <a href="${pageContext.request.contextPath}/showMyLoginPage">LOGIN</a>
+	Want to login? <a href="${pageContext.request.contextPath}/showMyLoginPage">LOGIN</a>
 	</div>
 	</div>
 

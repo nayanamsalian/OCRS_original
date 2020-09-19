@@ -112,7 +112,7 @@
 
 					</form>
 					
-					<a href="show_forgotPasswordPage">Forgot Password?</a>
+					<!-- <a href="show_forgotPasswordPage">Forgot Password?</a> -->
 
 				</div>
 

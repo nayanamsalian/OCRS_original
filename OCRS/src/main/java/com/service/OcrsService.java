@@ -1,7 +1,9 @@
 package com.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.dao.OcrsDoa;
 import com.ocrs.pojo.CommentPojo;
 import com.ocrs.pojo.ComplaintPojo;
+import com.ocrs.pojo.Notifications;
 import com.ocrs.pojo.PolicePojo;
 import com.ocrs.pojo.UserPojo;
 
@@ -121,6 +124,107 @@ public class OcrsService {
 	
 	public void deleteComplaintByID(int complaint_id)
 	{
+		ComplaintPojo complaintPojo=ocrsDoa.getComplaintByComplaintId(complaint_id);
 		ocrsDoa.deleteComplaintByID(complaint_id);
+		
+		File file = new File(complaintPojo.getAttached_file_path()); 
+        
+        if(file.delete()) 
+        { 
+            System.out.println("File deleted successfully"); 
+        } 
+        else
+        { 
+            System.out.println("Failed to delete the file"); 
+        } 
 	}
+
+	public PolicePojo getPoliceByUsername(String username) {
+		
+		return ocrsDoa.getPoliceByUsername(username);
+	}
+
+	public List limitRecords(int id, List records, int limit) {
+		int number=(id==1?0:((id==2)?limit:(limit+limit)));
+		int max=limit;
+		int total=records.size()-number;
+		List record_list=new ArrayList();
+		while(max>0 && total>0) {
+			record_list.add(records.get(number++));
+			--total;
+			--max;
+		}
+		return record_list;
+	}
+
+	public String validateUser(String username, String password, String cpassword, String firstname, String lastname,
+			String gender, String email) {
+		String message="";
+		if(username.equals("") || username == null || password.equals("") || password == null || cpassword.equals("") || cpassword == null || firstname.equals("") || firstname == null) {
+			message=message+"Enter the missing field/s, ";
+		}
+		if(!password.equals(cpassword)) {
+			message=message+"Password is not matching, ";
+		}
+		String pattern = ".*@.*";
+
+
+		if(!Pattern.matches(pattern, email)) {
+			message=message+" invalid email id,";
+		}
+		
+		return message;
+	}
+
+	public List<Notifications> getAllNotifications(String username1, String username2,String username3) {
+		return ocrsDoa.getAllNotifications(username1, username2, username3);
+	}
+
+	public boolean isPolice(String username) {
+		PolicePojo pojo=ocrsDoa.getPoliceByUsername(username);
+		if(pojo == null)
+		return false;
+		else
+		return true;
+	}
+
+	public void addNotification(Notifications notification_ob) {
+		ocrsDoa.addNotification(notification_ob);
+	}
+
+	public boolean isAdmin(String username) {
+		List authorities=ocrsDoa.getAuthorities(username);
+		System.out.println(authorities);
+		if(authorities.contains("ROLE_ADMIN"))
+			return true;
+		else
+		return false;
+	}
+
+	public void deteleNotificationById(int noti_id) {
+		ocrsDoa.deteleNotificationById(noti_id);
+	}
+
+	public void deleteNotificationByUsername(String username) {
+		ocrsDoa.deleteNotificationByUsername(username);
+		
+	}
+
+	
+	public List<Notifications> getValidNotofications(String username){
+		boolean isAdmin=isAdmin(username);
+		boolean isPolice=isPolice(username);
+		PolicePojo policePojo=getPoliceByUsername(username);
+		List<Notifications> notifications=null;
+		if(isAdmin) {
+			notifications=getAllNotifications(username,"admin",policePojo.getP_id());
+		}else if(isPolice) {
+			notifications=getAllNotifications(username,policePojo.getP_id(), "");
+		}
+		else {
+		notifications=getAllNotifications(username,"","");
+		}
+		return notifications;
+	}
+
 }

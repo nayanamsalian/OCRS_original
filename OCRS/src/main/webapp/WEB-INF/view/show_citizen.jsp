@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
@@ -46,27 +44,49 @@
 		<div id="slider">
 
 			<div id="templatemo_sidebar">
-				<div id="templatemo_header">
-				</div>
+				<div id="templatemo_header"></div>
 				<hr class="color">
 				<!-- end of header -->
 				<div class="table_div" class="home">
 					<table class="table_div">
 						<tr>
-							<td><p>
-									<a id="aId" href="${pageContext.request.contextPath}/makeAsPolice">Add
-										Police</a>
-								</p></td>
+							<td><security:authorize access="hasRole('POLICE')">
+									<p>
+										<a id="aId"
+											href="${pageContext.request.contextPath}/publicComplaints">public
+											complaints</a>
+									</p>
+								</security:authorize></td>
 							<td>
 								<p>
-									<a id="aId" href="${pageContext.request.contextPath}/viewAllPolice">View
-										All Police</a>
+									<a id="aId"
+										href="${pageContext.request.contextPath}/complaintDetails">Complaint
+										Details</a>
 								</p>
-							</td>
 
+							</td>
+							<security:authorize access="hasRole('ADMIN')">
+								<td>
+									<p>
+										<a id="aId"
+											href="${pageContext.request.contextPath}/manageUser">Manage
+											User</a>
+									</p>
+								</td>
+							</security:authorize>
+							<security:authorize access="hasRole('ADMIN')">
+								<td>
+									<p>
+										<a id="aId"
+											href="${pageContext.request.contextPath}/managePolice">Manage
+											Police</a>
+									</p>
+								</td>
+							</security:authorize>
 						</tr>
 					</table>
 				</div>
+
 
 			</div>
 			<!-- end of sidebar -->
@@ -91,8 +111,6 @@
 						href="${pageContext.request.contextPath}/myNotifications?userName=<security:authentication property='principal.username'/>">Notifications</a></li>
 				</ul>
 
-
-
 				<div id="content">
 
 					<!-- scroll -->
@@ -102,6 +120,39 @@
 						<div class="scrollContainer">
 
 							<div class="panel" id="home">
+
+								<hr>
+								<h2 style="color: black">
+									Welcome
+									<security:authentication property="principal.username" />
+									!! <br> <br>
+
+								</h2>
+								<hr>
+								First Name: ${userPojo.getFirstName()} <br><br> Last Name :
+								${userPojo.getLastName()} <br><br> Email:
+								${userPojo.getEmail()} <br><br> Gender: ${userPojo.getGender()}<br>
+								<br> Police station id: ${policePojo.getP_id()}<br>
+
+								<%
+									String url = request.getRequestURL() + "?" + request.getQueryString();
+								System.out.println(url);
+								%>
+
+								<c:if test="${isPolice == 1 }">
+									<a
+										href="${pageContext.request.contextPath}/deletePolice?user_name=${userPojo.getUserName()}&noti_id=${noti_id}">Delete
+										police Account</a>
+								</c:if>
+
+
+
+								<hr>
+
+								<input type="hidden" name="${_csrf.parameterName}"
+									value="${_csrf.token}" />
+
+
 							</div>
 						</div>
 

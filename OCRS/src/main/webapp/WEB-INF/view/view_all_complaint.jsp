@@ -97,18 +97,20 @@
 			<div id="templatemo_main">
 
 				<ul id="social_box">
-					<h4 style="color: black; padding: 20px 0px 25px 24px;">
+					<h4 style="color: black; padding: 9px 0px 25px 24px;">
 						Online Crime<br>Reporting System
 					</h4>
-
 					<li><a href="logout"><img src="images/logout.png"
 							alt="myspace" /></a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property="principal.username" />"><img
-							src="images/templatemo_aboutus.png" alt="twitter" /></a></li>
+						href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property='principal.username'/>">
+							<img src="images/templatemo_aboutus.png" alt="about me" />
+					</a> <br>Hi <security:authentication property='principal.username' />!</li>
 
 					<li><a href="${pageContext.request.contextPath}/"><img
 							src="images/templatemo_home_hover.png" /></a></li>
+					<li><br> <a style="color: green; font-size: 15;"
+						href="${pageContext.request.contextPath}/myNotifications?userName=<security:authentication property='principal.username'/>">Notifications</a></li>
 				</ul>
 
 
@@ -121,57 +123,94 @@
 						<div class="scrollContainer">
 
 							<div class="panel" id="home">
-								<form:form
-									action="${pageContext.request.contextPath}/getComplaintByStationID"
-									method="POST">
-									<%
-										ResourceBundle resource = ResourceBundle.getBundle("police_station_codes");
-									%>
-									<%
-										String codes[] = resource.getString("code").split(",");
-									%>
-									<select id="p_id" name="p_id">
-										<%
-											for (String code : codes) {
+								<c:if test="${remove_op != 1}">
+									<security:authorize access="hasRole('ADMIN')">
+										<form:form
+											action="${pageContext.request.contextPath}/getComplaintByStationID"
+											method="POST">
+											<%
+											ResourceBundle resource = ResourceBundle.getBundle("police_station_codes");
 										%>
-										<option value="<%=code%>"><%=code%></option>
-										<%
-											}
+											<%
+											String codes[] = resource.getString("code").split(",");
 										%>
-									</select>
+											<select id="p_id" name="p_id">
+												<option value="${complaints.get(0).getP_code()}"
+													selected="selected">${complaints.get(0).getP_code()}</option>
+												<%
+												for (String code : codes) {
+											%>
+												<option value="<%=code%>"><%=code%></option>
+												<%
+												}
+											%>
+											</select>
 
 
-									<input type="submit" value="search complaint by station ID">
-								</form:form>
+											<input type="submit" value="search complaint by station ID">
+										</form:form>
+
+									</security:authorize>
+								</c:if>
+								<c:if test="${ByS_id != 100}">
+									<c:if test="${size > 8}">
+										<a
+											href="${pageContext.request.contextPath}/viewAllRegisteredComplaints?user_name=<security:authentication property="principal.username" />&id=1">1</a>
+										<a
+											href="${pageContext.request.contextPath}/viewAllRegisteredComplaints?user_name=<security:authentication property="principal.username" />&id=2">2</a>
+										<c:if test="${size >16}">
+											<a
+												href="${pageContext.request.contextPath}/viewAllRegisteredComplaints?user_name=<security:authentication property="principal.username" />&id=3">3</a>
+										</c:if>
+									</c:if>
+								</c:if>
+
+								<c:if test="${ByS_id == 100}">
+									<c:if test="${size > 8}">
+										<a
+											href="${pageContext.request.contextPath}/getComplaintByStationID?p_id=${complaints.get(0).getP_code()}&id=1">1</a>
+										<a
+											href="${pageContext.request.contextPath}/getComplaintByStationID?p_id=${complaints.get(0).getP_code()}&id=2">2</a>
+										<c:if test="${size >16}">
+											<a
+												href="${pageContext.request.contextPath}/getComplaintByStationID?p_id=${complaints.get(0).getP_code()}&id=3">3</a>
+										</c:if>
+									</c:if>
+								</c:if>
+
 								<div>
-									
+
 									<c:if test="${complaints != null }">
 
 										<table border="0" cellpadding="5" class="compaliant_table">
-											<caption>
-												<h2>Complaints</h2>
-											</caption>
+
 											<tr style="text-align: left">
-												<th>-----</th>
+												<th></th>
 												<th>P_id</th>
 												<th>Complaints</th>
 												<th>status</th>
-												<th>-----</th>
+												<th></th>
 											</tr>
 											<c:forEach var="complaint" items="${complaints}">
 												<tr>
 													<td><security:authorize access="hasRole('ADMIN')">
 															<a
-																href="${pageContext.request.contextPath}/deleteComplaint?complaint_id=${complaint.getComplaint_id()}&user_name=<security:authentication property="principal.username" />&id=1">
+																href="${pageContext.request.contextPath}/deleteComplaint?complaint_id=${complaint.getComplaint_id()}&user_name=<security:authentication property="principal.username" />&flag=1">
 																<img src="images/delete_3.png" />
 															</a>
 														</security:authorize></td>
 													<td><c:out value="${complaint.getP_code()}" /></td>
 													<td><c:out value="${complaint.getComplaint()}" /></td>
 													<td><c:out value="${complaint.getStatus()}" /></td>
-													<td><a
-														href="${pageContext.request.contextPath}/expandComplaint?c_id=${complaint.getComplaint_id()}">view
-															complaint</a></td>
+													<td><c:if test="${noti_id != null}">
+															<a
+																href="${pageContext.request.contextPath}/expandComplaint?c_id=${complaint.getComplaint_id()}&noti_id="${noti_id}">view
+																complaint</a>
+														</c:if> <c:if test="${noti_id == null}">
+															<a
+																href="${pageContext.request.contextPath}/expandComplaint?c_id=${complaint.getComplaint_id()}">view
+																complaint</a>
+														</c:if></td>
 												</tr>
 											</c:forEach>
 										</table>

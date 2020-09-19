@@ -44,40 +44,50 @@
 		<div id="slider">
 
 			<div id="templatemo_sidebar">
-				<div id="templatemo_header">
-				</div>
+				<div id="templatemo_header"></div>
 				<hr class="color">
 				<!-- end of header -->
 				<div class="table_div" class="home">
 					<table class="table_div">
 						<tr>
+
 							<td><p>
 									<a id="aId"
-										href="${pageContext.request.contextPath}/viewAllRegisteredComplaints">View
-										all complaints</a>
+										href="${pageContext.request.contextPath}/getComplaintStationID?userName=<security:authentication property="principal.username" />">complaints</a>
 								</p></td>
-													</tr>
+							<security:authorize access="hasRole('ADMIN')">
+								<td><p>
+										<a id="aId"
+											href="${pageContext.request.contextPath}/viewAllRegisteredComplaints">All
+											complaints</a>
+									</p></td>
+							</security:authorize>
+						</tr>
 					</table>
 				</div>
 
-				
+
 			</div>
 			<!-- end of sidebar -->
 
 			<div id="templatemo_main">
 
 				<ul id="social_box">
-					<h4 style="color: black; padding: 20px 0px 25px 24px;">
+					<h4 style="color: black; padding: 9px 0px 25px 24px;">
 						Online Crime<br>Reporting System
 					</h4>
-				
-					<li><a href="logout"><img
-							src="images/logout.png" alt="myspace" /></a></li>
-					<li><a href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property="principal.username" />"><img
-							src="images/templatemo_aboutus.png" alt="twitter" /></a></li>
-							
+					<li><a href="logout"><img src="images/logout.png"
+							alt="myspace" /></a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property='principal.username'/>">
+							<img src="images/templatemo_aboutus.png" alt="about me" />
+					</a> <br>Hi <security:authentication property='principal.username'/>!</li>
+
 					<li><a href="${pageContext.request.contextPath}/"><img
 							src="images/templatemo_home_hover.png" /></a></li>
+					<li><br>
+					<a style="color: green; font-size: 15;"
+						href="${pageContext.request.contextPath}/myNotifications?userName=<security:authentication property='principal.username'/>">Notifications</a></li>
 				</ul>
 
 
@@ -90,7 +100,7 @@
 						<div class="scrollContainer">
 
 							<div class="panel" id="home">
-				<%-- 				<hr>
+								<%-- 				<hr>
 								<p>
 									<a
 										href="${pageContext.request.contextPath}/viewAllRegisteredComplaints">View
@@ -101,7 +111,8 @@
 
 								<a href="${pageContext.request.contextPath}/">Back to Home
 									Page</a>
- --%>							</div>
+ --%>
+							</div>
 						</div>
 
 					</div>

@@ -52,39 +52,19 @@
 				<div class="table_div" class="home">
 					<table class="table_div">
 						<tr>
-							<td><security:authorize access="hasRole('POLICE')">
-									<p>
-										<a id="aId"
-											href="${pageContext.request.contextPath}/publicComplaints">public
-											complaints</a>
-									</p>
-								</security:authorize></td>
+							<td><p>
+									<a id="aId"
+										href="${pageContext.request.contextPath}/addComplaint">Add
+										complaint</a>
+								</p></td>
 							<td>
 								<p>
 									<a id="aId"
-										href="${pageContext.request.contextPath}/complaintDetails">Complaint
-										Details</a>
+										href="${pageContext.request.contextPath}/viewAllComplaints?user_name=<security:authentication property="principal.username" />">View
+										my complaints</a>
 								</p>
 
 							</td>
-							<security:authorize access="hasRole('ADMIN')">
-								<td>
-									<p>
-										<a id="aId"
-											href="${pageContext.request.contextPath}/manageUser">Manage
-											User</a>
-									</p>
-								</td>
-							</security:authorize>
-							<security:authorize access="hasRole('ADMIN')">
-								<td>
-									<p>
-										<a id="aId"
-											href="${pageContext.request.contextPath}/managePolice">Manage
-											Police</a>
-									</p>
-								</td>
-							</security:authorize>
 						</tr>
 					</table>
 				</div>
@@ -94,18 +74,21 @@
 			<div id="templatemo_main">
 
 				<ul id="social_box">
-					<h4 style="color: black; padding: 20px 0px 25px 24px;">
+					<h4 style="color: black; padding: 9px 0px 25px 24px;">
 						Online Crime<br>Reporting System
 					</h4>
-
 					<li><a href="logout"><img src="images/logout.png"
 							alt="myspace" /></a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property="principal.username" />"><img
-							src="images/templatemo_aboutus.png" alt="twitter" /></a></li>
+						href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property='principal.username'/>">
+							<img src="images/templatemo_aboutus.png" alt="about me" />
+					</a> <br>Hi <security:authentication property='principal.username'/>!</li>
 
 					<li><a href="${pageContext.request.contextPath}/"><img
 							src="images/templatemo_home_hover.png" /></a></li>
+					<li><br>
+					<a style="color: green; font-size: 15;"
+						href="${pageContext.request.contextPath}/myNotifications?userName=<security:authentication property='principal.username'/>">Notifications</a></li>
 				</ul>
 
 				<div id="content">
@@ -117,24 +100,32 @@
 						<div class="scrollContainer">
 
 							<div class="panel" id="home">
-								<c:if test="${complaints !=null}">
-								<div align="center">
-									<table border="1" cellpadding="5">
+							<c:if test="${size > 8}">
+							<a href="${pageContext.request.contextPath}/viewAllComplaints?user_name=<security:authentication property="principal.username" />&id=1">1</a>
+							<a href="${pageContext.request.contextPath}/viewAllComplaints?user_name=<security:authentication property="principal.username" />&id=2">2</a>
+							<c:if test="${size >16}">
+							<a href="${pageContext.request.contextPath}/viewAllComplaints?user_name=<security:authentication property="principal.username" />&id=3">3</a>
+							</c:if>
+							</c:if>
+						
+								<c:if test="${complaints.size() != 0}">
+								<div>
+									<table border="0" cellpadding="5" class="compaliant_table">
 										<caption>
 											<h2>My Complaints</h2>
 										</caption>
-										<tr>
-											<th>-----</th>
-											<th>P_id</th>
+										<tr style="text-align: left">
+											<th></th>
+											<th>Station</th>
 											<th>Complaints</th>
 											<th>status</th>
-											<th>-----</th>
+											<th></th>
 										</tr>
 										<c:forEach var="complaint" items="${complaints}">
 											<tr>
 												<td><security:authorize access="hasRole('ADMIN')">
 														<a
-															href="${pageContext.request.contextPath}/deleteComplaint?complaint_id=${complaint.getComplaint_id()}&user_name=<security:authentication property="principal.username" />&id=0">
+															href="${pageContext.request.contextPath}/deleteComplaint?complaint_id=${complaint.getComplaint_id()}&user_name=<security:authentication property="principal.username" />&flag=0">
 															<img src="images/delete_3.png" />
 														</a>
 													</security:authorize></td>
@@ -152,7 +143,7 @@
 									</table>
 								</div>
 							</c:if>
-							<c:if test="${complaints ==null}">
+							<c:if test="${complaints.size() == 0}">
 							No records found!!
 							</c:if>
 							</div>

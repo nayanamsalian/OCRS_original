@@ -46,8 +46,7 @@
 		<div id="slider">
 
 			<div id="templatemo_sidebar">
-				<div id="templatemo_header">
-				</div>
+				<div id="templatemo_header"></div>
 				<hr class="color">
 				<!-- end of header -->
 				<div class="table_div" class="home">
@@ -55,29 +54,37 @@
 						<tr>
 							<td><security:authorize access="hasRole('POLICE')">
 									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/publicComplaints">public
+										<a id="aId"
+											href="${pageContext.request.contextPath}/publicComplaints">public
 											complaints</a>
 									</p>
 								</security:authorize></td>
 							<td>
 								<p>
-									<a id="aId" href="${pageContext.request.contextPath}/complaintDetails">Complaint
+									<a id="aId"
+										href="${pageContext.request.contextPath}/complaintDetails">Complaint
 										Details</a>
 								</p>
 
 							</td>
-							<security:authorize access="hasRole('ADMIN')"><td>
+							<security:authorize access="hasRole('ADMIN')">
+								<td>
 									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/manageUser">Manage
+										<a id="aId"
+											href="${pageContext.request.contextPath}/manageUser">Manage
 											User</a>
 									</p>
-								</td></security:authorize>
-							<security:authorize access="hasRole('ADMIN')"><td>
+								</td>
+							</security:authorize>
+							<security:authorize access="hasRole('ADMIN')">
+								<td>
 									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/managePolice">Manage
+										<a id="aId"
+											href="${pageContext.request.contextPath}/managePolice">Manage
 											Police</a>
 									</p>
-								</td></security:authorize>
+								</td>
+							</security:authorize>
 						</tr>
 					</table>
 				</div>
@@ -88,17 +95,21 @@
 			<div id="templatemo_main">
 
 				<ul id="social_box">
-					<h4 style="color: black; padding: 20px 0px 25px 24px;">
+					<h4 style="color: black; padding: 9px 0px 25px 24px;">
 						Online Crime<br>Reporting System
 					</h4>
-				
-					<li><a href="logout"><img
-							src="images/logout.png" alt="myspace" /></a></li>
-					<li><a href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property="principal.username" />"><img
-							src="images/templatemo_aboutus.png" alt="twitter" /></a></li>
-							
+					<li><a href="logout"><img src="images/logout.png"
+							alt="myspace" /></a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property='principal.username'/>">
+							<img src="images/templatemo_aboutus.png" alt="about me" />
+					</a> <br>Hi <security:authentication property='principal.username'/>!</li>
+
 					<li><a href="${pageContext.request.contextPath}/"><img
 							src="images/templatemo_home_hover.png" /></a></li>
+					<li><br>
+					<a style="color: green; font-size: 15;"
+						href="${pageContext.request.contextPath}/myNotifications?userName=<security:authentication property='principal.username'/>">Notifications</a></li>
 				</ul>
 
 
@@ -111,49 +122,66 @@
 						<div class="scrollContainer">
 
 							<div class="panel" id="home">
-	<div>
-		<div>
-			<form:form action="${pageContext.request.contextPath}/searchUser"
-				method="POST">
-				<input type="text" name="user_pattern">
-				<input type="submit" value="search user">
-			</form:form>
-		</div>
+								<div>
+									<div>
+										<form:form
+											action="${pageContext.request.contextPath}/searchUser"
+											method="POST">
+											<input type="text" name="user_pattern">
+											<input type="submit" value="search user">
+										</form:form>
+									</div>
+									<c:if test="${removed == 0}">
+									<c:if test="${size > 10}">
+										<a
+											href="${pageContext.request.contextPath}/searchUser?pattern=${pattern}id=1">1</a>
+										<a
+											href="${pageContext.request.contextPath}/searchUser?pattern=${pattern}id=2">2</a>
+										<c:if test="${size >20}">
+											<a
+												href="${pageContext.request.contextPath}/searchUser?pattern=${pattern}id=3">3</a>
+										</c:if>
+									</c:if>
+									</c:if>
+									<c:if test="${removed == 1}">
+									<c:if test="${size > 10}">
+										<a
+											href="${pageContext.request.contextPath}/viewAllUser?id=1">1</a>
+										<a
+											href="${pageContext.request.contextPath}/viewAllUser?id=2">2</a>
+										<c:if test="${size >20}">
+											<a
+												href="${pageContext.request.contextPath}/viewAllUser?id=3">3</a>
+										</c:if>
+									</c:if>
+									</c:if>
+									<c:if test="${users !=null}">
+										<div>
+											<table border="0" cellpadding="5" style="color: black;">
 
-		<c:if test="${users !=null}">
-			<div>
-				<table border="0" cellpadding="5" style="color:black;">
-					<caption>
-						<h2>List of users</h2>
-					</caption>
-					<tr>
-						<th>User Name</th>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Gender</th>
-						<th>Email</th>
-					</tr>
-					<c:forEach var="user" items="${users}">
-						<tr>
-							<td><c:out value="${user.getUserName()}" /></td>
-							<td><c:out value="${user.getFirstName()}" /></td>
-							<td><c:out value="${user.getLastName()}" /></td>
-							<td><c:out value="${user.getGender()}" /></td>
-							<td><c:out value="${user.getEmail()}" /></td>
-							<td><a
-								href="${pageContext.request.contextPath}/deleteUser?user_name=${user.getUserName()}">Delete
-									account</a></td>
-						</tr>
-					</c:forEach>
-				</table>
-			</div>
-		</c:if>
-		<c:if test="${users ==null }">
+												<tr>
+													<th>First Name</th>
+													<th>Last Name</th>
+												</tr>
+												<c:forEach var="user" items="${users}">
+													<tr>
+														<td><c:out value="${user.getFirstName()}" /></td>
+														<td><c:out value="${user.getLastName()}" /></td>
+														<td><a
+															href="${pageContext.request.contextPath}/showCitizen?user_name=${user.getUserName()}">view</a></td>
+														<td><a
+															href="${pageContext.request.contextPath}/deleteUser?user_name=${user.getUserName()}">Delete
+																account</a></td>
+													</tr>
+												</c:forEach>
+											</table>
+										</div>
+									</c:if>
+									<c:if test="${users ==null }">
 	No reords found
 	</c:if>
-		<hr>
-	</div>
-</div>
+								</div>
+							</div>
 						</div>
 
 					</div>

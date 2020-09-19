@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.ocrs.pojo.CommentPojo;
 import com.ocrs.pojo.ComplaintPojo;
+import com.ocrs.pojo.Notifications;
 import com.ocrs.pojo.PolicePojo;
 import com.ocrs.pojo.UserPojo;
 
@@ -74,6 +75,28 @@ public class OcrsDaoImpl implements OcrsDoa {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public List<String> getAuthorities(String username) {
+		con=MyConnection.getConnection();
+		List<String> authorities=new ArrayList<String>();
+		if(con!=null)
+			System.out.println("success");
+		String query="select * from authorities where username='"+username+"'";
+		
+		try {
+			Statement stmt=con.createStatement();
+			ResultSet rs=stmt.executeQuery(query);
+			while(rs.next()) {
+				authorities.add(rs.getString(2));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return authorities;
 	}
 
 	public void addUser(UserPojo user) {
@@ -198,13 +221,22 @@ public class OcrsDaoImpl implements OcrsDoa {
 			System.out.println("success");
 		PreparedStatement pstmt;
 		try {
-			pstmt = con.prepareStatement("update complaint_table set user_name=?, police_station_code=? ,complaint=?, status_=? where complaint_id=?");
+			if(complaintPojo.getAttached_file_path().equals("file not found")) {
+				pstmt = con.prepareStatement("update complaint_table set user_name=?, police_station_code=? ,complaint=?, status_=?  where complaint_id=?");
+
+				pstmt.setInt(5, complaintPojo.getComplaint_id());
+			}
+			else {
+				pstmt = con.prepareStatement("update complaint_table set user_name=?, police_station_code=? ,complaint=?, status_=?, attached_file=?  where complaint_id=?");
+
+				pstmt.setString(5, complaintPojo.getAttached_file_path());
+				pstmt.setInt(6, complaintPojo.getComplaint_id());
+			}
 
 			pstmt.setString(1, complaintPojo.getUsername());
 			pstmt.setString(2, complaintPojo.getP_code());
 			pstmt.setString(3, complaintPojo.getComplaint());
 			pstmt.setString(4, complaintPojo.getStatus());
-			pstmt.setInt(5, complaintPojo.getComplaint_id());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -380,7 +412,7 @@ public class OcrsDaoImpl implements OcrsDoa {
 			e.printStackTrace();
 		}
 
-		
+
 	}
 
 	@Override
@@ -445,9 +477,9 @@ public class OcrsDaoImpl implements OcrsDoa {
 		else if(id==2)
 			query="update user_table set last_name=? where user_name=?";
 		else if(id==3)
-		    query="update user_table set email=? where user_name=?";
+			query="update user_table set email=? where user_name=?";
 		else if(id==4)
-		     query="update user_table set gender=? where user_name=?";
+			query="update user_table set gender=? where user_name=?";
 		con=MyConnection.getConnection();
 		if(con!=null)
 			System.out.println("success");
@@ -479,8 +511,8 @@ public class OcrsDaoImpl implements OcrsDoa {
 			pstmt.setString(2, firstName);
 			pstmt.setString(3, comment);
 			pstmt.executeUpdate();
-			
-		
+
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -541,7 +573,7 @@ public class OcrsDaoImpl implements OcrsDoa {
 			pstmt = con.prepareStatement("delete from comment_table where complaint_id=?");
 			pstmt.setInt(1, complaint_id);
 			pstmt.executeUpdate();
-			
+
 			pstmt = con.prepareStatement("delete from complaint_table where complaint_id=?");
 			pstmt.setInt(1, complaint_id);
 			pstmt.executeUpdate();
@@ -549,10 +581,117 @@ public class OcrsDaoImpl implements OcrsDoa {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	
+	@Override
+	public PolicePojo getPoliceByUsername(String username) {
+		con=MyConnection.getConnection();
+		PolicePojo police=null;
+		if(con!=null)
+			System.out.println("success");
+		Statement stmt;
+		try {
+			stmt = con.createStatement();
+			String query="select * from police_station_table where user_name='"+username+"'";
+			ResultSet rs=stmt.executeQuery(query);
+			while(rs.next()) {
+				police=new PolicePojo(rs.getString(1),rs.getString(2));
+			}
+		}
+		catch (SQLException e1) {
+			e1.printStackTrace();
+		}		
+		return police;
+	}
+
+	@Override
+	public List<Notifications> getAllNotifications(String username1,String username2, String username3) {
+		con=MyConnection.getConnection();
+		List<Notifications> notifications=new ArrayList<Notifications>();
+		if(con!=null)
+			System.out.println("success");
+		Statement stmt;
+		try {
+			stmt = con.createStatement();
+			String query="";
+			if(username1.equals("") && username2.equals("") && username3.equals("")) {
+				System.out.println("both equal to null");
+				query="select * from notifications";
+			}
+			else if(!username1.equals("") || !username2.equals("") || !username3.equals("")) {
+				System.out.println("username1"+username1+" username2:"+username2);
+				query="select * from notifications where user_name='"+username1+"' or user_name='"+username2+"' or user_name='"+username3+"'";
+			}
+			
+			ResultSet rs=stmt.executeQuery(query);
+			while(rs.next()) {
+				notifications.add(new Notifications(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+			}
+		}
+		catch (SQLException e1) {
+			e1.printStackTrace();
+		}		
+		return notifications;
+	}
+
+	@Override
+	public void addNotification(Notifications notification_ob) {
+		con=MyConnection.getConnection();
+		if(con!=null)
+			System.out.println("success");
+		PreparedStatement pstmt;
+		try {
+			pstmt = con.prepareStatement("insert into notifications(user_name,notification,location,notification_status) values(?,?,?,?)");
+
+			pstmt.setString(1, notification_ob.getUsername());
+			pstmt.setString(2, notification_ob.getNotification());
+			pstmt.setString(3, notification_ob.getLocation());
+			pstmt.setString(4, notification_ob.getNotification_status());
+			pstmt.executeUpdate();
+
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void deteleNotificationById(int noti_id) {
+		con=MyConnection.getConnection();
+		if(con!=null)
+			System.out.println("success");
+		PreparedStatement pstmt;
+		try {
+			pstmt = con.prepareStatement("delete from notifications where notification_id=?");
+			pstmt.setInt(1, noti_id);
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void deleteNotificationByUsername(String username) {
+		con=MyConnection.getConnection();
+		if(con!=null)
+			System.out.println("success");
+		PreparedStatement pstmt;
+		try {
+			pstmt = con.prepareStatement("delete from notifications where user_name=?");
+			pstmt.setString(1, username);
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 
 }

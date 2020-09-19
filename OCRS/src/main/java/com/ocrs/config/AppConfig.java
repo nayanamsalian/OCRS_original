@@ -11,7 +11,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -122,12 +124,16 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 		registry.addResourceHandler("/js/**").addResourceLocations("/js/");
 	}
 	
+	/*
+	 * @Bean(name = "multipartResolver") public CommonsMultipartResolver
+	 * multipartResolver() { CommonsMultipartResolver multipartResolver = new
+	 * CommonsMultipartResolver(); multipartResolver.setMaxUploadSize(100000);
+	 * return multipartResolver; }
+	 */
+	
 	@Bean(name = "multipartResolver")
-	public CommonsMultipartResolver multipartResolver() {
-	    CommonsMultipartResolver resolver=new CommonsMultipartResolver();
-	    //resolver.setDefaultEncoding("utf-8");
-	    resolver.setMaxUploadSize(10000000);
-	    return resolver;
+	public StandardServletMultipartResolver resolver() {
+		return new StandardServletMultipartResolver();
 	}
 	
 	

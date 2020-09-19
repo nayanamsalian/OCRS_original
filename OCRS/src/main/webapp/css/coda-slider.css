@@ -166,7 +166,7 @@ table.table_div td{
 }
 
 #aId { 
-	color: #000000; 
+	color: #38250E; 
 	font-size: 21px;
 	text-decoration: none;
 }
@@ -241,6 +241,7 @@ ul.navigation a:focus {
 .compaliant_table{
 width:896px;
 color:black;	
+font-size: 12;
 }
 
 .regis_main{

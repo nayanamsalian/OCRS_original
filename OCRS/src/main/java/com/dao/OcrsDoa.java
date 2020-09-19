@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 import com.ocrs.pojo.CommentPojo;
 import com.ocrs.pojo.ComplaintPojo;
+import com.ocrs.pojo.Notifications;
+import com.ocrs.pojo.PolicePojo;
 import com.ocrs.pojo.UserPojo;
 
 @Component
@@ -30,4 +32,10 @@ public interface OcrsDoa {
 	public List<CommentPojo> getAllCommentsByCompliantId(int complaint_id);
 	public void deleteCommentById(int comment_id);
 	public void deleteComplaintByID(int complaint_id);
+	public PolicePojo getPoliceByUsername(String username);
+	public List<Notifications> getAllNotifications(String username1, String username2, String usernmae3);
+	public List<String> getAuthorities(String username);
+	public void addNotification(Notifications notification_ob);
+	public void deteleNotificationById(int noti_id);
+	public void deleteNotificationByUsername(String username);
 }

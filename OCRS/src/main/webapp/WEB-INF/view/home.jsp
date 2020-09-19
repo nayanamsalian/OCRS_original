@@ -44,9 +44,7 @@
 		<div id="slider">
 
 			<div id="templatemo_sidebar">
-				<div id="templatemo_header">
-					
-				</div>
+				<div id="templatemo_header"></div>
 				<hr class="color">
 				<!-- end of header -->
 				<div class="table_div" class="home">
@@ -54,49 +52,64 @@
 						<tr>
 							<td><security:authorize access="hasRole('POLICE')">
 									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/publicComplaints">public
+										<a id="aId"
+											href="${pageContext.request.contextPath}/publicComplaints">public
 											complaints</a>
 									</p>
 								</security:authorize></td>
 							<td>
 								<p>
-									<a id="aId" href="${pageContext.request.contextPath}/complaintDetails">Complaint
+									<a id="aId"
+										href="${pageContext.request.contextPath}/complaintDetails">Complaint
 										Details</a>
 								</p>
 
 							</td>
-							<security:authorize access="hasRole('ADMIN')"><td>
+							<security:authorize access="hasRole('ADMIN')">
+								<td>
 									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/manageUser">Manage
+										<a id="aId"
+											href="${pageContext.request.contextPath}/manageUser">Manage
 											User</a>
 									</p>
-								</td></security:authorize>
-							<security:authorize access="hasRole('ADMIN')"><td>
+								</td>
+							</security:authorize>
+							<security:authorize access="hasRole('ADMIN')">
+								<td>
 									<p>
-										<a id="aId" href="${pageContext.request.contextPath}/managePolice">Manage
+										<a id="aId"
+											href="${pageContext.request.contextPath}/managePolice">Manage
 											Police</a>
 									</p>
-							</td></security:authorize>
+								</td>
+							</security:authorize>
 						</tr>
 					</table>
 				</div>
 
-				
+
 			</div>
 			<!-- end of sidebar -->
 
 			<div id="templatemo_main">
 
 				<ul id="social_box">
-				<h4 style="color: black; padding: 20px 0px 25px 24px;">Online Crime<br>Reporting System</h4>
-					<li><a href="logout"><img
-							src="images/logout.png" alt="myspace" /></a></li>
-					<li><a href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property="principal.username" />"><img
-							src="images/templatemo_aboutus.png" alt="twitter" /></a></li>
-							
+					<h4 style="color: black; padding: 9px 0px 25px 24px;">
+						Online Crime<br>Reporting System
+					</h4>
+					<li><a href="logout"><img src="images/logout.png"
+							alt="myspace" /></a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/personDetails?userName=<security:authentication property='principal.username'/>">
+							<img src="images/templatemo_aboutus.png" alt="about me" />
+					</a> <br>Hi <security:authentication property='principal.username' />!</li>
+
 					<li><a href="${pageContext.request.contextPath}/"><img
 							src="images/templatemo_home_hover.png" /></a></li>
+					<li><br> <a style="color: green; font-size: 15;"
+						href="${pageContext.request.contextPath}/myNotifications?userName=<security:authentication property='principal.username'/>">Notifications</a></li>
 				</ul>
+
 
 				<div id="content">
 
@@ -109,23 +122,44 @@
 							<div class="panel" id="home">
 
 								<hr>
-								<h2 style="color:black">
+								<h2 style="color: black">
 									Welcome
-									<security:authentication property="principal.username" />!!
-									<br> <br> 
-									<%-- Role(s):
-									<security:authentication property="principal.authorities" /> --%>
-									</h2>
+									<security:authentication property="principal.username" />
+									!! <br> <br>
+								</h2>
+								<c:if test="${message != null }">
+									${message}
+								</c:if>
 								<hr>
 
-<%-- 																<a href="${pageContext.request.contextPath}/logout">logout</a>
-								<!-- Add a logout button -->
-								<form:form action="${pageContext.request.contextPath}/logout"
-									method="POST">
 
-									<input type="submit" value="Logout" />
+								<c:if test="${notifications != null }">
 
-								</form:form> --%>
+									<table border="0" cellpadding="5" class="compaliant_table">
+
+										<tr style="text-align: left">
+											<c:forEach var="notification" items="${notifications}">
+												<tr>
+													<td><a
+														href="${pageContext.request.contextPath}/deleteThisNotification?noti_id=${notification.getNotification_id()}&userName=<security:authentication property="principal.username"/>">delete</a></td>
+													<td><security:authorize access="hasRole('ADMIN')">
+															<c:out value="${notification.getUsername()}" />:
+														</security:authorize> <c:out value="${notification.getNotification()}" /> <c:if
+															test="${notification.getLocation() != null}">
+															<c:if
+															test="${notification.getLocation() != ''}">
+															<a
+																href="<c:out value="${notification.getLocation()}" />&noti_id=${notification.getNotification_id()}">click
+																here</a>
+																</c:if>
+														</c:if></td>
+
+
+												</tr>
+											</c:forEach>
+									</table>
+								</c:if>
+
 								<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}" />
 
